@@ -1,21 +1,36 @@
-drop database if exists api;
-Create database api;
-use api;
-CREATE TABLE  user (
-                       id integer auto_increment PRIMARY KEY,
-                       email VARCHAR(50) NOT NULL ,
-                       password VARCHAR(50) NOT NULL,
-                       created_at date NOT NULL,
-                       updated_at date NOT NULL
+DROP DATABASE IF EXISTS api_hoteles;
+CREATE DATABASE api_hoteles;
+USE api_hoteles;
 
+CREATE TABLE Hotel (
+                         idHotel INT AUTO_INCREMENT PRIMARY KEY,
+                         nombre VARCHAR(100) NOT NULL,
+                         descripcion VARCHAR (100),
+                         categoria VARCHAR(1),
+                         tiene_piscina BOOLEAN,
+                         localidad VARCHAR(50) NOT NULL
 );
 
+INSERT INTO Hotel VALUES (1,'Olid','Centro','4',true,'Valladolid'),
+                           (2,'Paris', 'Centro','3',false,'Valladolid'),
+                           (3,'Lasa Sport', 'Deportivo','4',true,'Valladolid'),
+                           (4,'Felipe IV', 'Centro','2',false,'Valladolid');
 
-INSERT INTO user  VALUES (1, 'juan@gmail.com', 'juan', '2010-01-29','2022-01-29'),
- (2, 'ana@gmail.com', 'ana', '2009-01-29','2021-01-29'),
-(3, 'luis@gmail.com', 'luis', '2009-03-29','2020-04-29'),
- (4, 'sara@gmail.com', 'sara', '2008-05-29','2017-06-29'),
- (5, 'mariano@gmail.com', 'mariano', '2001-09-29','2020-01-29'),
- (6, 'angel@gmail.com', 'angel', '2002-04-29','2020-05-29'),
-(7, 'lucia@gmail.com', 'lucia', '2009-09-29','2020-07-29'),
-(8, 'javier@gmail.com', 'javier', '2005-03-29','2019-04-29');
+CREATE TABLE Habitacion (
+                              idHabitacion INT PRIMARY KEY,
+                              idHotel INT,
+                              capacidad int,
+                              precioNoche DECIMAL(10, 2),
+                              incluyeDesayuno BOOLEAN,
+                              ocupada BOOLEAN,
+                              FOREIGN KEY (idHotel) REFERENCES Hotel(idHotel)
+);
+
+INSERT INTO Habitacion (idHabitacion, idHotel, capacidad, precioNoche, incluyeDesayuno, ocupada)
+VALUES
+    (101, 1, 2, 150.00, true, false),
+    (102, 1, 1, 100.00, false, false),
+    (201, 2, 2, 300.00, true, true),
+    (202, 2, 2, 280.00, false, false),
+    (301, 3, 1, 80.00, true, false),
+    (302, 4, 2, 120.00, false, true);
