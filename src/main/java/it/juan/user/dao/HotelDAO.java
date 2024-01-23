@@ -29,24 +29,34 @@ public class HotelDAO implements HotelDAOInterface{
         return hoteles;
     }
 
-
     @Override
-    public Hotel findByLocalidad(String localidad) {
+    public List<Hotel> findByLocalidad(String localidad) {
+
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Hotel hotel = currentSession.get(Hotel.class, localidad);
+        // Usamos HQL (Hibernate Query Language) para realizar la consulta
+        Query<Hotel> theQuery = currentSession.createQuery("SELECT h FROM Hotel h WHERE h.localidad = :localidad", Hotel.class);
+        theQuery.setParameter("localidad", localidad);
 
-        return hotel;
+        List<Hotel> hoteles = theQuery.getResultList();
+
+        return hoteles;
     }
 
     @Override
-    public Hotel findByCategoria(String categoria) {
+    public List<Hotel> findByCategoria(String categoria) {
+
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Hotel hotel = currentSession.get(Hotel.class, categoria);
+        Query<Hotel> theQuery = currentSession.createQuery("SELECT u from Hotel u WHERE U.categoria= :categoria", Hotel.class);
 
-        return hotel;
+        theQuery.setParameter("categoria", categoria);
+
+        List<Hotel> hoteles = theQuery.getResultList();
+
+        return hoteles;
     }
+
 
     @Override
     public void anadirHotel(Hotel hotel) {

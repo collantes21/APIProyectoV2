@@ -27,18 +27,20 @@ public class HotelService implements HotelServiceInterface {
     }
 
     @Override
-    public Hotel findByLocalidad(String localidad) {
-        return null;
+    public List<Hotel> findByLocalidad(String localidad) {
+
+        return hotelDAO.findByLocalidad(localidad);
     }
 
     @Override
-    public Hotel findByCategoria(String categoria) {
-        return null;
+    public List<Hotel> findByCategoria(String categoria) {
+
+        return hotelDAO.findByLocalidad(categoria);
     }
 
     @Override
     public void anadirHotel(Hotel hotel) {
-
+        hotelDAO.anadirHotel(hotel);
     }
     @Override
     public void deleteById(int idHotel) {

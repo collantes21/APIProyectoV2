@@ -12,8 +12,9 @@ public class Habitacion {
     @Column(name = "id_Habitacion")
     private int id_Habitacion;
 
-    @Column(name = "idHotel")
-    private int id_Hotel;
+    @ManyToOne
+    @JoinColumn(name = "id_Hotel")
+    private Hotel hotel;
 
     @Column(name="capacidad")
     private double capacidad;
@@ -30,9 +31,9 @@ public class Habitacion {
     public Habitacion() {
     }
 
-    public Habitacion(int id_Habitacion, int id_Hotel, double capacidad, double precio_Noche, Boolean incluye_Desayuno, Boolean ocupada) {
+    public Habitacion(int id_Habitacion, Hotel hotel, double capacidad, double precio_Noche, Boolean incluye_Desayuno, Boolean ocupada) {
         this.id_Habitacion = id_Habitacion;
-        this.id_Hotel = id_Hotel;
+        this.hotel = hotel;
         this.capacidad = capacidad;
         this.precio_Noche = precio_Noche;
         this.incluye_Desayuno = incluye_Desayuno;
@@ -47,12 +48,12 @@ public class Habitacion {
         this.id_Habitacion = id_Habitacion;
     }
 
-    public int getId_Hotel() {
-        return id_Hotel;
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public void setId_Hotel(int id_Hotel) {
-        this.id_Hotel = id_Hotel;
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 
     public double getCapacidad() {
@@ -91,7 +92,7 @@ public class Habitacion {
     public String toString() {
         return "Habitacion{" +
                 "id_Habitacion=" + id_Habitacion +
-                ", id_Hotel=" + id_Hotel +
+                ", hotel=" + hotel +
                 ", capacidad=" + capacidad +
                 ", precio_Noche=" + precio_Noche +
                 ", incluye_Desayuno=" + incluye_Desayuno +

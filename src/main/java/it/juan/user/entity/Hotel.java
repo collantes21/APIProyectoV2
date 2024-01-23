@@ -29,8 +29,8 @@ public class Hotel {
     @Column(name="localidad")
     private String localidad;
 
-//    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
-//    private List<Habitacion> habitaciones;
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+    private List<Habitacion> habitaciones;
 
     public Hotel() {
     }

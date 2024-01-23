@@ -10,9 +10,9 @@ public interface HotelServiceInterface {
 
     public List<Hotel> findAll();
 
-    public Hotel findByLocalidad(String localidad);
+    public List<Hotel> findByLocalidad(String localidad);
 
-    public Hotel findByCategoria(String categoria);
+    public List<Hotel> findByCategoria(String categoria);
     public void anadirHotel(Hotel hotel);
     public void deleteById(int idHotel);
 
