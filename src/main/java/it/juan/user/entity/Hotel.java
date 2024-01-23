@@ -2,6 +2,7 @@ package it.juan.user.entity;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -10,9 +11,8 @@ public class Hotel {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "idHotel")
+    @Column(name = "id_Hotel")
     private int idHotel;
-
 
     @Column(name="nombre")
     private String nombre;
@@ -24,11 +24,13 @@ public class Hotel {
     private String categoria;
 
     @Column(name="tiene_piscina")
-    private boolean tiene_piscina;
+    private Boolean tiene_piscina;
 
     @Column(name="localidad")
     private String localidad;
 
+//    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+//    private List<Habitacion> habitaciones;
 
     public Hotel() {
     }
@@ -88,5 +90,17 @@ public class Hotel {
 
     public void setLocalidad(String localidad) {
         this.localidad = localidad;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "idHotel=" + idHotel +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", tiene_piscina=" + tiene_piscina +
+                ", localidad='" + localidad + '\'' +
+                '}';
     }
 }

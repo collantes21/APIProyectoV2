@@ -9,71 +9,93 @@ public class Habitacion {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "idHabitacion")
-    private int idHabitacion;
+    @Column(name = "id_Habitacion")
+    private int id_Habitacion;
 
-
-    @Column(name="idHotel")
-    private int idHotel;
+    @Column(name = "idHotel")
+    private int id_Hotel;
 
     @Column(name="capacidad")
-    private double precioNoche;
+    private double capacidad;
+
+    @Column(name="precioNoche")
+    private double precio_Noche;
 
     @Column(name="incluyeDesayuno")
-    private boolean incluyeDesayuno;
+    private Boolean incluye_Desayuno;
 
     @Column(name="ocupada")
-    private boolean ocupada;
-
+    private Boolean ocupada;
 
     public Habitacion() {
     }
 
-    public Habitacion(int idHabitacion, int idHotel, double precioNoche, boolean incluyeDesayuno, boolean ocupada) {
-        this.idHabitacion = idHabitacion;
-        this.idHotel = idHotel;
-        this.precioNoche = precioNoche;
-        this.incluyeDesayuno = incluyeDesayuno;
+    public Habitacion(int id_Habitacion, int id_Hotel, double capacidad, double precio_Noche, Boolean incluye_Desayuno, Boolean ocupada) {
+        this.id_Habitacion = id_Habitacion;
+        this.id_Hotel = id_Hotel;
+        this.capacidad = capacidad;
+        this.precio_Noche = precio_Noche;
+        this.incluye_Desayuno = incluye_Desayuno;
         this.ocupada = ocupada;
     }
 
-    public int getIdHabitacion() {
-        return idHabitacion;
+    public int getId_Habitacion() {
+        return id_Habitacion;
     }
 
-    public void setIdHabitacion(int idHabitacion) {
-        this.idHabitacion = idHabitacion;
+    public void setId_Habitacion(int id_Habitacion) {
+        this.id_Habitacion = id_Habitacion;
     }
 
-    public int getIdHotel() {
-        return idHotel;
+    public int getId_Hotel() {
+        return id_Hotel;
     }
 
-    public void setIdHotel(int idHotel) {
-        this.idHotel = idHotel;
+    public void setId_Hotel(int id_Hotel) {
+        this.id_Hotel = id_Hotel;
     }
 
-    public double getPrecioNoche() {
-        return precioNoche;
+    public double getCapacidad() {
+        return capacidad;
     }
 
-    public void setPrecioNoche(double precioNoche) {
-        this.precioNoche = precioNoche;
+    public void setCapacidad(double capacidad) {
+        this.capacidad = capacidad;
     }
 
-    public boolean isIncluyeDesayuno() {
-        return incluyeDesayuno;
+    public double getPrecio_Noche() {
+        return precio_Noche;
     }
 
-    public void setIncluyeDesayuno(boolean incluyeDesayuno) {
-        this.incluyeDesayuno = incluyeDesayuno;
+    public void setPrecio_Noche(double precio_Noche) {
+        this.precio_Noche = precio_Noche;
     }
 
-    public boolean isOcupada() {
+    public Boolean getIncluye_Desayuno() {
+        return incluye_Desayuno;
+    }
+
+    public void setIncluye_Desayuno(Boolean incluye_Desayuno) {
+        this.incluye_Desayuno = incluye_Desayuno;
+    }
+
+    public Boolean getOcupada() {
         return ocupada;
     }
 
-    public void setOcupada(boolean ocupada) {
+    public void setOcupada(Boolean ocupada) {
         this.ocupada = ocupada;
+    }
+
+    @Override
+    public String toString() {
+        return "Habitacion{" +
+                "id_Habitacion=" + id_Habitacion +
+                ", id_Hotel=" + id_Hotel +
+                ", capacidad=" + capacidad +
+                ", precio_Noche=" + precio_Noche +
+                ", incluye_Desayuno=" + incluye_Desayuno +
+                ", ocupada=" + ocupada +
+                '}';
     }
 }

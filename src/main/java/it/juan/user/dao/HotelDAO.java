@@ -6,14 +6,14 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public class HotelDAO implements HotelDAOInterface{
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+//    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private EntityManager entityManager;
 
@@ -24,10 +24,11 @@ public class HotelDAO implements HotelDAOInterface{
 
         Query<Hotel> theQuery = currentSession.createQuery("SELECT u from Hotel u", Hotel.class);
 
-        List<Hotel> users = theQuery.getResultList();
+        List<Hotel> hoteles = theQuery.getResultList();
 
-        return users;
+        return hoteles;
     }
+
 
     @Override
     public Hotel findByLocalidad(String localidad) {
