@@ -23,11 +23,11 @@ public class HotelRestController {
     @Autowired
     private HotelServiceInterface hotelService;
 
-//    @GetMapping("/hoteles")
-//    public List<Hotel> findAll(){
-//        //retornará todos los usuarios
-//        return hotelService.findAll();
-//    }
+    @GetMapping("/hoteles")
+    public List<Hotel> findAll(){
+        //retornará todos los usuarios
+        return hotelService.findAll();
+    }
 
 
 }

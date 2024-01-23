@@ -8,9 +8,11 @@ import it.juan.user.dao.HotelDAOInterface;
 import it.juan.user.entity.Habitacion;
 import it.juan.user.entity.Hotel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class HotelService implements HotelServiceInterface {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
