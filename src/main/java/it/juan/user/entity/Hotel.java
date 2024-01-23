@@ -35,7 +35,7 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(int idHotel, String nombre, String descripcion, String categoria, boolean tiene_piscina, String localidad) {
+    public Hotel(int idHotel, String nombre, String descripcion, String categoria, Boolean tiene_piscina, String localidad) {
         this.idHotel = idHotel;
         this.nombre = nombre;
         this.descripcion = descripcion;

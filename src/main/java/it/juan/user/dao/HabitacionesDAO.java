@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Repository
 public class HabitacionesDAO implements HabitacionesDAOInterface{
@@ -28,7 +30,7 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
     }
 
     @Override
-    public void eliminarHabitacion(int idHabitacion) {
+    public void eliminarHabitacion(int id_Habitacion) {
 
         Session currentSession = entityManager.unwrap(Session.class);
         Transaction t = currentSession.beginTransaction();
@@ -37,16 +39,46 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
         //currentSession.delete(user);
         //otra forma utilizando sentencias HQL DE hibernate
 
-        Query theQuery = currentSession.createQuery("delete from Habitacion u where idHabitacion IN (:idHabitacion)");
+        Query theQuery = currentSession.createQuery("delete from Habitacion u where id_Habitacion IN (:id_Habitacion)");
 
-        theQuery.setParameter("idHabitacion", idHabitacion);
+        theQuery.setParameter("id_Habitacion", id_Habitacion);
         theQuery.executeUpdate();
         t.commit();
         currentSession.close();
     }
 
     @Override
-    public void modificarOcupacion(int idHabitacion) {
+    public void modificarOcupacion(int id_Habitacion) {
 
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Habitacion habitacion = currentSession.get(Habitacion.class, id_Habitacion);
+        Transaction t = currentSession.beginTransaction();
+
+        if (habitacion != null) {
+            habitacion.setOcupada(true);
+            currentSession.saveOrUpdate(habitacion);
+            t.commit();
+            currentSession.close();
+
+        } else {
+            throw new EntityNotFoundException("Habitacion no encontrada: " + id_Habitacion);
+        }
+    }
+
+    @Override
+    public List<Habitacion> habitaciones_Tamano_Precio(double capacidad_Minima, double capacidad_Maxima, double precio_Minimo, double precio_Maximo) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        String hql = "FROM Habitacion h WHERE h.capacidad BETWEEN :capacidad_Minima AND :capacidad_Maxima " +
+                "AND h.precio_Noche BETWEEN :precio_Minimo AND :precio_Maximo AND h.ocupada = true";
+
+        Query<Habitacion> query = currentSession.createQuery(hql, Habitacion.class);
+        query.setParameter("capacidad_Minima", capacidad_Minima);
+        query.setParameter("capacidad_Maxima", capacidad_Maxima);
+        query.setParameter("precio_Minimo", precio_Minimo);
+        query.setParameter("precio_Maximo", precio_Maximo);
+
+        return query.getResultList();
     }
 }

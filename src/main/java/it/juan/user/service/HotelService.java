@@ -43,22 +43,33 @@ public class HotelService implements HotelServiceInterface {
         hotelDAO.anadirHotel(hotel);
     }
     @Override
-    public void deleteById(int idHotel) {
+    public void deleteById(int id_Hotel) {
 
     }
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////
 
     @Override
     public void anadirHabitacion(Habitacion habitacion) {
-
+        habitacionesDAO.anadirHabitacion(habitacion);
     }
 
     @Override
-    public void eliminarHabitacion(int idHabitacion) {
-
+    public void eliminarHabitacion(int id_Habitacion) {
+        habitacionesDAO.eliminarHabitacion(id_Habitacion);
     }
 
     @Override
-    public void modificarOcupacion(int idHabitacion) {
-
+    public void modificarOcupacion(int id_Habitacion) {
+        habitacionesDAO.modificarOcupacion(id_Habitacion);
     }
+
+    @Override
+    public List<Habitacion> habitaciones_Tamano_Precio(double capacidad_Minima, double capacidad_Maxima, double precio_Minimo, double precio_Maximo) {
+        return habitacionesDAO.habitaciones_Tamano_Precio(capacidad_Minima, capacidad_Maxima, precio_Minimo, precio_Maximo);
+    }
+
+
 }
