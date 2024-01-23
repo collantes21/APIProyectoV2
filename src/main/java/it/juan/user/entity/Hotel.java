@@ -1,8 +1,6 @@
 package it.juan.user.entity;
 
 
-
-
 import javax.persistence.*;
 
 
