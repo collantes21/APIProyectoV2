@@ -35,7 +35,7 @@ public class HotelService implements HotelServiceInterface {
     @Override
     public List<Hotel> findByCategoria(String categoria) {
 
-        return hotelDAO.findByLocalidad(categoria);
+        return hotelDAO.findByCategoria(categoria);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class HotelService implements HotelServiceInterface {
     }
     @Override
     public void deleteById(int id_Hotel) {
-
+        hotelDAO.deleteById(id_Hotel);
     }
 
 

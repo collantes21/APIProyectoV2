@@ -23,7 +23,7 @@ CREATE TABLE Habitacion (
                               precio_Noche DECIMAL(10, 2),
                               incluye_Desayuno BOOLEAN,
                               ocupada BOOLEAN,
-                              FOREIGN KEY (id_Hotel) REFERENCES Hotel(id_Hotel)
+                              FOREIGN KEY (id_Hotel) REFERENCES Hotel(id_Hotel) on delete cascade
 );
 
 INSERT INTO Habitacion (id_Habitacion, id_Hotel, capacidad, precio_Noche, incluye_Desayuno, ocupada)

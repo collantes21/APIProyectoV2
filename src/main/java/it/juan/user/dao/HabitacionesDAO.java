@@ -39,7 +39,7 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
         //currentSession.delete(user);
         //otra forma utilizando sentencias HQL DE hibernate
 
-        Query theQuery = currentSession.createQuery("delete from Habitacion u where id_Habitacion IN (:id_Habitacion)");
+        Query theQuery = currentSession.createQuery("delete from Habitacion h where id_Habitacion IN (:id_Habitacion)");
 
         theQuery.setParameter("id_Habitacion", id_Habitacion);
         theQuery.executeUpdate();

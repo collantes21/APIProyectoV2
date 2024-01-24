@@ -48,7 +48,7 @@ public class HotelDAO implements HotelDAOInterface{
 
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Query<Hotel> theQuery = currentSession.createQuery("SELECT u from Hotel u WHERE U.categoria= :categoria", Hotel.class);
+        Query<Hotel> theQuery = currentSession.createQuery("SELECT h from Hotel h WHERE h.categoria= :categoria", Hotel.class);
 
         theQuery.setParameter("categoria", categoria);
 
