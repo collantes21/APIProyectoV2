@@ -23,8 +23,9 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
 
         Session currentSession = entityManager.unwrap(Session.class);
         Transaction t = currentSession.beginTransaction();
-
-        currentSession.saveOrUpdate(habitacion);
+        if (habitacion==null)
+            System.out.println("nada");
+        currentSession.save(habitacion);
         t.commit();
         currentSession.close();
     }
@@ -71,7 +72,7 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
         Session currentSession = entityManager.unwrap(Session.class);
 
         String hql = "FROM Habitacion h WHERE h.capacidad BETWEEN :capacidad_Minima AND :capacidad_Maxima " +
-                "AND h.precio_Noche BETWEEN :precio_Minimo AND :precio_Maximo AND h.ocupada = true";
+                "AND h.precio_Noche BETWEEN :precio_Minimo AND :precio_Maximo AND h.ocupada = false";
 
         Query<Habitacion> query = currentSession.createQuery(hql, Habitacion.class);
         query.setParameter("capacidad_Minima", capacidad_Minima);

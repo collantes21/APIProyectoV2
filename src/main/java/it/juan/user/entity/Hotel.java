@@ -29,20 +29,10 @@ public class Hotel {
     @Column(name="localidad")
     private String localidad;
 
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
-    private List<Habitacion> habitaciones;
 
     public Hotel() {
     }
 
-    public Hotel(int idHotel, String nombre, String descripcion, String categoria, Boolean tiene_piscina, String localidad) {
-        this.idHotel = idHotel;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.categoria = categoria;
-        this.tiene_piscina = tiene_piscina;
-        this.localidad = localidad;
-    }
 
     public int getIdHotel() {
         return idHotel;

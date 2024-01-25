@@ -1,9 +1,7 @@
 package it.juan.user.service;
 
 
-import it.juan.user.dao.HabitacionesDAO;
 import it.juan.user.dao.HabitacionesDAOInterface;
-import it.juan.user.dao.HotelDAO;
 import it.juan.user.dao.HotelDAOInterface;
 import it.juan.user.entity.Habitacion;
 import it.juan.user.entity.Hotel;
@@ -18,7 +16,13 @@ public class HotelService implements HotelServiceInterface {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private HotelDAOInterface hotelDAO;
+    @Autowired
     private HabitacionesDAOInterface habitacionesDAO;
+
+//    public HotelService(HabitacionesDAOInterface habitacionesDAO) {
+//        this.habitacionesDAO = habitacionesDAO;
+//    }
+
 
     @Override
     public List<Hotel> findAll() {
@@ -53,7 +57,9 @@ public class HotelService implements HotelServiceInterface {
 
     @Override
     public void anadirHabitacion(Habitacion habitacion) {
-        habitacionesDAO.anadirHabitacion(habitacion);
+        if (habitacion==null)
+            System.out.println("nada1");
+            habitacionesDAO.anadirHabitacion(habitacion);
     }
 
     @Override
