@@ -30,6 +30,8 @@ public class Hotel {
     private String localidad;
 
 
+
+
     public Hotel() {
     }
 

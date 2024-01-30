@@ -43,4 +43,4 @@ CREATE TABLE User (
 
 );
 
-INSERT INTO Hotel VALUES  (1,'juan', 'juan');
+INSERT INTO User VALUES  (1,'juan', 'juan');
