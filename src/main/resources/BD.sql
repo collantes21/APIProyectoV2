@@ -35,3 +35,12 @@ VALUES
     (202, 2, 30, 2, 280.00, false, false),
     (301, 3, 40, 1, 80.00, true, false),
     (302, 4, 200, 2, 120.00, false, true);
+
+CREATE TABLE User (
+                       id_Usuario INT AUTO_INCREMENT PRIMARY KEY,
+                       usuario VARCHAR(100) NOT NULL,
+                       password VARCHAR (100) not null
+
+);
+
+INSERT INTO Hotel VALUES  (1,'juan', 'juan');
