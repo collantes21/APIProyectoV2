@@ -1,34 +1,55 @@
 package it.juan.user.entity;
 
 
-import javax.persistence.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="Habitacion")
 public class Habitacion {
 
+    @Schema(description = "Id habitacion", example = "1", required = true)
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id_Habitacion")
     private int id_Habitacion;
 
-    @Column(name = "id_Hotel")
-    private int id_Hotel;
+    @ManyToOne
+    @JoinColumn(name = "id_Hotel", nullable = false)
+    private Hotel hotel;
 
+    @Schema(description = "capacidad de la habitacion", example = "200.0", required = true)
+    //	@NotBlank: Documenta que el atributo es obligatorio
+    @NotBlank
     @Column(name="capacidad")
     private double capacidad;
 
+    @Schema(description = "Precio noche", example = "150.0", required = true)
+    //	@NotBlank: Documenta que el atributo es obligatorio
+    @NotBlank
     @Column(name="precioNoche")
     private double precio_Noche;
 
+    @Schema(description = "Incluye desayuno", example = "True", required = true)
+    //	@NotBlank: Documenta que el atributo es obligatorio
+    @NotBlank
     @Column(name="incluyeDesayuno")
     private Boolean incluye_Desayuno;
 
+    @Schema(description = "Habitacion ocupada", example = "False", required = true)
+    //	@NotBlank: Documenta que el atributo es obligatorio
+    @NotBlank
     @Column(name="ocupada")
     private Boolean ocupada;
 
-    public Habitacion() {
-    }
 
     public int getId_Habitacion() {
         return id_Habitacion;
@@ -38,12 +59,12 @@ public class Habitacion {
         this.id_Habitacion = id_Habitacion;
     }
 
-    public int getId_Hotel() {
-        return id_Hotel;
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public void setId_Hotel(int id_Hotel) {
-        this.id_Hotel = id_Hotel;
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 
     public double getCapacidad() {
@@ -82,7 +103,7 @@ public class Habitacion {
     public String toString() {
         return "Habitacion{" +
                 "id_Habitacion=" + id_Habitacion +
-                ", id_hotel=" + id_Hotel +
+                ", hotel=" + hotel +
                 ", capacidad=" + capacidad +
                 ", precio_Noche=" + precio_Noche +
                 ", incluye_Desayuno=" + incluye_Desayuno +

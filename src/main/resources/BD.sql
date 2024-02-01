@@ -43,4 +43,5 @@ CREATE TABLE User (
 
 );
 
-INSERT INTO User VALUES  (1,'juan', 'juan');
+INSERT INTO User VALUES  (1,'juan', 'juan'),
+                         (2, 'alvaro', 'alvaro');

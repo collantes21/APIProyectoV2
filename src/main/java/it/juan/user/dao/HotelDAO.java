@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -70,17 +71,30 @@ public class HotelDAO implements HotelDAOInterface{
     }
 
     @Override
-    public void deleteById(int idHotel) {
+    public void deleteById(int id_Hotel) {
 
         Session currentSession = entityManager.unwrap(Session.class);
-        Transaction t = currentSession.beginTransaction();
+        Transaction transaction = currentSession.beginTransaction();
 
+        try {
+            Hotel hotel = currentSession.get(Hotel.class, id_Hotel);
 
-        Query theQuery = currentSession.createQuery("delete from Hotel u where idHotel IN (:idHotel)");
+            // Verifique se o hotel existe
+            if (hotel != null) {
+                // As habitaciones associadas serão excluídas devido à configuração de cascata
+                currentSession.delete(hotel);
+            } else {
+                // Lide com o caso em que o hotel com o ID especificado não é encontrado
+                throw new EntityNotFoundException("Hotel with ID " + id_Hotel + " not found");
+            }
 
-        theQuery.setParameter("idHotel", idHotel);
-        theQuery.executeUpdate();
-        t.commit();
-        currentSession.close();
+            transaction.commit();
+        } catch (Exception e) {
+            // Lide com exceções, registre ou relance se necessário
+            transaction.rollback();
+            throw e;
+        } finally {
+            currentSession.close();
+        }
     }
 }

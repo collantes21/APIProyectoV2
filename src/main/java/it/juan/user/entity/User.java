@@ -9,7 +9,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "id_Hotel")
+    @Column(name = "id_usuario")
     private int id_Usuario;
 
     @Column(name = "usuario")
