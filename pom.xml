@@ -51,6 +51,16 @@ La segunda (springfox-swagger-ui) es que se encarga de tomar los metadatos de la
 
 		<!-- Documentación OpenAPI 3 e interfaz con Swagger UI -->
 		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.5.2</version>
@@ -58,7 +68,7 @@ La segunda (springfox-swagger-ui) es que se encarga de tomar los metadatos de la
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.5.2</version>
+			<version>1.6.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

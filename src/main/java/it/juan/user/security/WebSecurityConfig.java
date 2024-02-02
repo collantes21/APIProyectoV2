@@ -25,15 +25,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
             // -- Swagger UI v3 (OpenAPI)            "/v3/api-docs/**",
             "/swagger-ui/**" };           // other public endpoints of your API may be appended to this array    };
 
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.csrf().disable()
-                    .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-                    .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/api/user").permitAll()
-                    .antMatchers(AUTH_WHITELIST).permitAll()
-                    .anyRequest().authenticated();
-        }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/user").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Ignorar estas rutas para la autenticación
+                .anyRequest().authenticated();
+    }
+
+
 
 }
 
