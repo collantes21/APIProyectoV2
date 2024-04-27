@@ -145,7 +145,8 @@ public class HotelRestController {
 
     @Operation(summary = "Inserta una habitacion")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Se registra una habitacion", content = @Content(schema = @Schema(implementation = Habitacion.class)))
+            @ApiResponse(responseCode = "201", description = "La habitacion se añadio correctamente", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "404", description = "La habitacion no pudo añadirse", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @PostMapping("/insertar_habitacion")
     public void anadirHabitacion(@RequestBody Habitacion habitacion) {
