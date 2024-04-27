@@ -163,7 +163,11 @@ public class HotelRestController {
         hotelService.eliminarHabitacion(id_Habitacion);
     }
 
-
+    @Operation(summary = "Modifica la habitacion")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Habitacion modificada", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "404", description = "Habitacion no existe", content = @Content(schema = @Schema(implementation = Response.class)))
+    })
     @PutMapping("/modificar_ocupacion/{id_Habitacion}")
     public void modificarOcupacion(@PathVariable int id_Habitacion) {
         hotelService.modificarOcupacion(id_Habitacion);
