@@ -100,10 +100,10 @@ public class HotelRestController {
     }
 
 
-    @Operation(summary = "Registra un nuevo hotel")
+    @Operation(summary = "Registrar un nuevo hotel")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Se registra el hotel", content = @Content(schema = @Schema(implementation = Hotel.class)))
-    })
+            @ApiResponse(responseCode = "201", description = "Se registra el hotel", content = @Content(schema = @Schema(implementation = Hotel.class))),
+            @ApiResponse(responseCode = "404", description = "El hotel no pudo ser registrado, compruebe los datos introducidos", content = @Content(schema = @Schema(implementation = Response.class)))
     @PostMapping("/insertar_hotel")
     public Hotel addUser(@RequestBody Hotel hotel) {
 
