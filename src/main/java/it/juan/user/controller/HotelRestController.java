@@ -175,6 +175,11 @@ public class HotelRestController {
     }
 
 
+    @Operation(summary = "Modifica la habitacion")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Listado de habitaciones", content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "404", description = "No hay habitaciones para esas condiciones", content = @Content(schema = @Schema(implementation = Response.class)))
+    })
     @GetMapping("/listar_tamano_precio")
     public List<Habitacion> habitaciones_Tamano_Precio(
             @RequestParam double capacidad_Minima,
