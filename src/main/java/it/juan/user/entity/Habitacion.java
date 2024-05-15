@@ -11,26 +11,29 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name="Habitacion")
 public class Habitacion {
 
     @Schema(description = "Id habitacion", example = "1", required = true)
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id_Habitacion")
     private int id_Habitacion;
 
-    @ManyToOne
-    @JoinColumn(name = "id_Hotel", nullable = false)
-    private Hotel hotel;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_Hotel", nullable = false)
+
+
+    @Schema(description = "id_Hotel", example = "7", required = true)
+    @NotBlank
+    @Column(name="id_Hotel")
+    private int id_Hotel;
 
     @Schema(description = "capacidad de la habitacion", example = "200.0", required = true)
     //	@NotBlank: Documenta que el atributo es obligatorio
     @NotBlank
     @Column(name="capacidad")
-    private double capacidad;
+    private int capacidad;
 
     @Schema(description = "Precio noche", example = "150.0", required = true)
     //	@NotBlank: Documenta que el atributo es obligatorio
@@ -50,6 +53,8 @@ public class Habitacion {
     @Column(name="ocupada")
     private Boolean ocupada;
 
+    public Habitacion() {
+    }
 
     public int getId_Habitacion() {
         return id_Habitacion;
@@ -59,19 +64,20 @@ public class Habitacion {
         this.id_Habitacion = id_Habitacion;
     }
 
-    public Hotel getHotel() {
-        return hotel;
+
+    public int getId_hotel() {
+        return id_Hotel;
     }
 
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
+    public void setId_hotel( int id_hotel) {
+        this.id_Hotel = id_hotel;
     }
 
     public double getCapacidad() {
         return capacidad;
     }
 
-    public void setCapacidad(double capacidad) {
+    public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
     }
 
@@ -103,7 +109,7 @@ public class Habitacion {
     public String toString() {
         return "Habitacion{" +
                 "id_Habitacion=" + id_Habitacion +
-                ", hotel=" + hotel +
+                "id_Hotel=" + id_Hotel +
                 ", capacidad=" + capacidad +
                 ", precio_Noche=" + precio_Noche +
                 ", incluye_Desayuno=" + incluye_Desayuno +

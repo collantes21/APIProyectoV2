@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+
 @Service
 public class HotelService implements HotelServiceInterface {
 
@@ -56,10 +58,11 @@ public class HotelService implements HotelServiceInterface {
     ///////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void anadirHabitacion(Habitacion habitacion) {
+    public Habitacion anadirHabitacion(Habitacion habitacion) {
         if (habitacion==null)
             System.out.println("nada1");
-            habitacionesDAO.anadirHabitacion(habitacion);
+            return habitacionesDAO.anadirHabitacion(habitacion);
+
     }
 
     @Override
@@ -75,6 +78,12 @@ public class HotelService implements HotelServiceInterface {
     @Override
     public List<Habitacion> habitaciones_Tamano_Precio(double capacidad_Minima, double capacidad_Maxima, double precio_Minimo, double precio_Maximo) {
         return habitacionesDAO.habitaciones_Tamano_Precio(capacidad_Minima, capacidad_Maxima, precio_Minimo, precio_Maximo);
+    }
+
+    @Override
+    public Hotel findById(int idHotel) {
+        Hotel hotel = hotelDAO.findById(idHotel);
+        return hotel;
     }
 
 

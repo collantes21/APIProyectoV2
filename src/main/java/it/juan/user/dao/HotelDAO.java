@@ -32,7 +32,6 @@ public class HotelDAO implements HotelDAOInterface{
 
     @Override
     public List<Hotel> findByLocalidad(String localidad) {
-
         Session currentSession = entityManager.unwrap(Session.class);
 
         // Usamos HQL (Hibernate Query Language) para realizar la consulta
@@ -96,5 +95,14 @@ public class HotelDAO implements HotelDAOInterface{
         } finally {
             currentSession.close();
         }
+    }
+
+    @Override
+    public Hotel findById(int idHotel) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Hotel hotel = currentSession.get(Hotel.class, idHotel);
+
+        return hotel;
     }
 }

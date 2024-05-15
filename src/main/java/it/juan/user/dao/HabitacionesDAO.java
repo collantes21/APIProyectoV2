@@ -19,7 +19,7 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
     @Autowired
     private EntityManager entityManager;
     @Override
-    public void anadirHabitacion(Habitacion habitacion) {
+    public Habitacion anadirHabitacion(Habitacion habitacion) {
 
         Session currentSession = entityManager.unwrap(Session.class);
         Transaction t = currentSession.beginTransaction();
@@ -28,6 +28,8 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
         currentSession.save(habitacion);
         t.commit();
         currentSession.close();
+
+        return habitacion;
     }
 
     @Override

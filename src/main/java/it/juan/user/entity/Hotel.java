@@ -13,7 +13,6 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name="Hotel")
 public class Hotel {
@@ -54,10 +53,11 @@ public class Hotel {
     @Column(name="localidad")
     private String localidad;
 
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
-    private List<Habitacion> habitaciones;
+//    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Habitacion> habitaciones;
 
-
+    public Hotel() {
+    }
 
     public int getIdHotel() {
         return idHotel;

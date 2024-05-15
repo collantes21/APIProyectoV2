@@ -16,11 +16,13 @@ public interface HotelServiceInterface {
     public void anadirHotel(Hotel hotel);
     public void deleteById(int id_Hotel);
 
-    public void anadirHabitacion(Habitacion habitacion);
+    public Habitacion anadirHabitacion(Habitacion habitacion);
 
     public void eliminarHabitacion(int id_Habitacion);
 
     public void modificarOcupacion(int id_Habitacion);
 
     public List<Habitacion> habitaciones_Tamano_Precio(double capacidad_Minima, double capacidad_Maxima, double precio_Minimo, double precio_Maximo);
+
+    public Hotel findById(int idHotel);
 }

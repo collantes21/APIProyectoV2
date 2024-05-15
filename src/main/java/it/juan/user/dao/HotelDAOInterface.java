@@ -14,4 +14,6 @@ public interface HotelDAOInterface {
     public void anadirHotel(Hotel hotel);
     public void deleteById(int idHotel);
 
+    public Hotel findById(int idHotel);
+
 }

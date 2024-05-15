@@ -7,7 +7,7 @@ import java.util.List;
 public interface HabitacionesDAOInterface {
 
 
-    public void anadirHabitacion(Habitacion habitacion);
+    public Habitacion anadirHabitacion(Habitacion habitacion);
 
     public void eliminarHabitacion(int idHabitacion);
 

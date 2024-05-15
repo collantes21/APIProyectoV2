@@ -17,6 +17,8 @@ import it.juan.user.service.HotelService;
 import it.juan.user.service.HotelServiceInterface;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
@@ -77,7 +79,7 @@ public class HotelRestController {
                                 .map(GrantedAuthority::getAuthority)
                                 .collect(Collectors.toList()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 600000))
+                .setExpiration(new Date(System.currentTimeMillis() + 9000000))
                 .signWith(SignatureAlgorithm.HS512,
                         secretKey.getBytes()).compact();
 
@@ -102,8 +104,9 @@ public class HotelRestController {
 
     @Operation(summary = "Registrar un nuevo hotel")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Se registra el hotel", content = @Content(schema = @Schema(implementation = Hotel.class))),
+            @ApiResponse(responseCode = "200", description = "Se registra el hotel", content = @Content(schema = @Schema(implementation = Hotel.class))),
             @ApiResponse(responseCode = "404", description = "El hotel no pudo ser registrado, compruebe los datos introducidos", content = @Content(schema = @Schema(implementation = Response.class)))
+    })
     @PostMapping("/insertar_hotel")
     public Hotel addUser(@RequestBody Hotel hotel) {
 
@@ -111,6 +114,25 @@ public class HotelRestController {
 
         return hotel;
     }
+
+//    @Operation(summary = "Registrar un nuevo hotel")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Se registra el hotel", content = @Content(schema = @Schema(implementation = Hotel.class))),
+//            @ApiResponse(responseCode = "400", description = "El hotel no pudo ser registrado, no se puede proporcionar el id_Hotel", content = @Content(schema = @Schema(implementation = Response.class)))
+//    })
+//    @PostMapping("/insertar_hotel")
+//    public ResponseEntity<?> addUser(@RequestBody Hotel hotel) {
+//        // Verificar si se proporciona un id_Hotel
+//        if (hotel.getIdHotel() != null || !hotel.getIdHotel().isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se puede proporcionar el id_Hotel al registrar un nuevo hotel");
+//        }
+//
+//        // Si no se proporciona el id_Hotel, agregar el hotel
+//        hotelService.anadirHotel(hotel);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(hotel);
+//    }
+
+
 
 
     @Operation(summary = "Lista de hoteles por categoria")
@@ -149,8 +171,8 @@ public class HotelRestController {
             @ApiResponse(responseCode = "404", description = "La habitacion no pudo añadirse", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @PostMapping("/insertar_habitacion")
-    public void anadirHabitacion(@RequestBody Habitacion habitacion) {
-        hotelService.anadirHabitacion(habitacion);
+    public Habitacion anadirHabitacion(@RequestBody Habitacion habitacion) {
+        return hotelService.anadirHabitacion(habitacion);
     }
 
 
@@ -160,8 +182,10 @@ public class HotelRestController {
             @ApiResponse(responseCode = "404", description = "Habitacion no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @DeleteMapping("/eliminar_habitacion/{id_Habitacion}")
-    public void eliminarHabitacion(@PathVariable int id_Habitacion) {
+    public String eliminarHabitacion(@PathVariable int id_Habitacion) {
         hotelService.eliminarHabitacion(id_Habitacion);
+
+        return "Se elimina la habitacion";
     }
 
     @Operation(summary = "Modifica la habitacion")
@@ -188,6 +212,27 @@ public class HotelRestController {
             @RequestParam double precio_Maximo)
     {
         return hotelService.habitaciones_Tamano_Precio(capacidad_Minima, capacidad_Maxima, precio_Minimo, precio_Maximo);
+    }
+
+    @Operation(summary = "Elimina un hotel")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se elimina el hotel", content = @Content(schema = @Schema(implementation = Hotel.class))),
+            @ApiResponse(responseCode = "404", description = "El hotel no existe", content = @Content(schema = @Schema(implementation = Response.class)))
+    })
+
+    @DeleteMapping("borrar_hotel/{idHotel}")
+    public String deteteHotel(@PathVariable int idHotel) {
+
+        Hotel hotel = hotelService.findById(idHotel);
+
+        if(hotel == null) {
+            throw new RuntimeException("Hotel id not found -"+idHotel);
+        }
+
+        hotelService.deleteById(idHotel);
+
+        //Esto método, recibira el id de un hotel por URL y se borrará de la bd.
+        return "Hotel con id "+idHotel+ " borrado";
     }
 
 }
