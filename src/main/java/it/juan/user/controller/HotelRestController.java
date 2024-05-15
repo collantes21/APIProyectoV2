@@ -153,9 +153,14 @@ public class HotelRestController {
             @ApiResponse(responseCode = "404", description = "No se encontraron hoteles para la localidad especificada", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @GetMapping("/buscar_hotel_localidad/{localidad}")
-    public List<Hotel> findByLocalidad(@PathVariable String localidad) {
-        return (List<Hotel>) hotelService.findByLocalidad(localidad);
+    public ResponseEntity<?> buscarHotelesPorLocalidad(@PathVariable String localidad) {
+        List<Hotel> hoteles = hotelService.findByLocalidad(localidad);
+        if (hoteles.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La localidad indicada no existe");
+        }
+        return ResponseEntity.ok(hoteles);
     }
+
 
 
 
