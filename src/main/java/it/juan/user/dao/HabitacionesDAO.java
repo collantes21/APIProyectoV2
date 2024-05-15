@@ -82,6 +82,8 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
         query.setParameter("precio_Minimo", precio_Minimo);
         query.setParameter("precio_Maximo", precio_Maximo);
 
+        System.out.printf("Prueba");
+
         return query.getResultList();
     }
 }
