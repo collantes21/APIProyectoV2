@@ -156,7 +156,7 @@ public class HotelRestController {
     public ResponseEntity<?> buscarHotelesPorLocalidad(@PathVariable String localidad) {
         List<Hotel> hoteles = hotelService.findByLocalidad(localidad);
         if (hoteles.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La localidad indicada no existe");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La localidad indicada no existe ");
         }
         return ResponseEntity.ok(hoteles);
     }
