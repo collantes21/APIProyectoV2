@@ -20,15 +20,21 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
     private EntityManager entityManager;
     @Override
     public Habitacion anadirHabitacion(Habitacion habitacion) {
-
         Session currentSession = entityManager.unwrap(Session.class);
-        Transaction t = currentSession.beginTransaction();
-        if (habitacion==null)
-            System.out.println("nada");
-        currentSession.save(habitacion);
-        t.commit();
-        currentSession.close();
-
+        Transaction t = null;
+        try {
+            t = currentSession.beginTransaction();
+            currentSession.save(habitacion);
+            t.commit();
+        } catch (Exception e) {
+            if (t != null) {
+                t.rollback();
+            }
+            e.printStackTrace(); // Imprime la excepción para depuración
+            throw e; // Lanza la excepción para que sea manejada en el controlador
+        } finally {
+            currentSession.close();
+        }
         return habitacion;
     }
 

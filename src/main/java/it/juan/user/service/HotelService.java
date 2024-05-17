@@ -39,7 +39,7 @@ public class HotelService implements HotelServiceInterface {
     }
 
     @Override
-    public List<Hotel> findByCategoria(String categoria) {
+    public List<Hotel> findByCategoria(Integer categoria) {
 
         return hotelDAO.findByCategoria(categoria);
     }
@@ -59,10 +59,8 @@ public class HotelService implements HotelServiceInterface {
 
     @Override
     public Habitacion anadirHabitacion(Habitacion habitacion) {
-        if (habitacion==null)
-            System.out.println("nada1");
-            return habitacionesDAO.anadirHabitacion(habitacion);
 
+            return habitacionesDAO.anadirHabitacion(habitacion);
     }
 
     @Override

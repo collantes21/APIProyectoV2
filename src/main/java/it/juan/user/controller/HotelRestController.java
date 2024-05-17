@@ -19,16 +19,24 @@ import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.validation.Valid;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -36,6 +44,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("ALL")
 @RestController
 @RequestMapping("/api")
+@Validated
 
 
 public class HotelRestController {
@@ -108,12 +117,30 @@ public class HotelRestController {
             @ApiResponse(responseCode = "404", description = "El hotel no pudo ser registrado, compruebe los datos introducidos", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @PostMapping("/insertar_hotel")
-    public Hotel addUser(@RequestBody Hotel hotel) {
-
+    public ResponseEntity<?> addHotel(@Valid @RequestBody Hotel hotel) {
         hotelService.anadirHotel(hotel);
-
-        return hotel;
+        return ResponseEntity.ok(hotel);
     }
+
+
+//    public ResponseEntity<?> addHotel(@Valid @RequestBody Hotel hotel) {
+//        try {
+//            hotelService.anadirHotel(hotel);
+//            return ResponseEntity.ok(hotel);
+//        } catch (Exception e) {
+//            // Registrar el error para su análisis
+//            System.err.println("Error al añadir el hotel" + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al registrar el hotel");
+//        }
+//    }
+
+
+//    public Hotel addUser(@RequestBody Hotel hotel) {
+//
+//        hotelService.anadirHotel(hotel);
+//
+//        return hotel;
+//    }
 
 //    @Operation(summary = "Registrar un nuevo hotel")
 //    @ApiResponses(value = {
@@ -141,8 +168,12 @@ public class HotelRestController {
             @ApiResponse(responseCode = "404", description = "No se encontraron hoteles para la categoría especificada", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @GetMapping("/buscar_hotel_categoria/{categoria}")
-    public List<Hotel> findByCategoria(@PathVariable String categoria) {
-        return hotelService.findByCategoria(categoria);
+    public ResponseEntity<?> buscarHotelesPorCategoria(@PathVariable Integer categoria) {
+        List<Hotel> hoteles = hotelService.findByCategoria(categoria);
+        if (hoteles.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La categoria indicada no existe ");
+        }
+        return ResponseEntity.ok(hoteles);
     }
 
 
@@ -150,7 +181,7 @@ public class HotelRestController {
     @Operation(summary = "Lista de hoteles por localidad")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Hoteles encontrados", content = @Content(schema = @Schema(implementation = Hotel.class))),
-            @ApiResponse(responseCode = "404", description = "No se encontraron hoteles para la localidad especificada", content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "404", description = "La localidad indicada no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @GetMapping("/buscar_hotel_localidad/{localidad}")
     public ResponseEntity<?> buscarHotelesPorLocalidad(@PathVariable String localidad) {
@@ -176,9 +207,43 @@ public class HotelRestController {
             @ApiResponse(responseCode = "404", description = "La habitacion no pudo añadirse", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @PostMapping("/insertar_habitacion")
-    public Habitacion anadirHabitacion(@RequestBody Habitacion habitacion) {
-        return hotelService.anadirHabitacion(habitacion);
+    public ResponseEntity<?> anadirHabitacion(@Valid @RequestBody Habitacion habitacion) {
+        try {
+            Habitacion habitacionAgregada = hotelService.anadirHabitacion(habitacion);
+            return ResponseEntity.ok(habitacionAgregada);
+        } catch (Exception e) {
+            // Registrar el error para su análisis
+            System.err.println("Error al añadir la habitación: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al registrar la habitación");
+        }
     }
+
+//    public Habitacion anadirHabitacion(@RequestBody Habitacion habitacion) {
+//
+//        return hotelService.anadirHabitacion(habitacion);
+//    }
+
+
+//    public ResponseEntity<?> anadirHabitacion(@Valid @RequestBody Habitacion habitacion) {
+//        try {
+//            Habitacion habitacionAgregada = hotelService.anadirHabitacion(habitacion);
+//            return ResponseEntity.ok(habitacionAgregada);
+//        } catch (HttpMessageNotReadableException e) {
+//            throw e; // Permitir que HabitacionExceptionHandler maneje esta excepción
+//        } catch (MethodArgumentTypeMismatchException e) {
+//            throw e; // Permitir que HabitacionExceptionHandler maneje esta excepción
+//        } catch (Exception e) {
+//            // Registrar el error para su análisis
+//            System.err.println("Error al añadir la habitación: " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al registrar la habitación");
+//        }
+//    }
+
+
+
+
+
+
 
 
     @Operation(summary = "Elimina una habitacion")

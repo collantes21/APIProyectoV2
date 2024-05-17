@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
@@ -16,30 +17,31 @@ import javax.validation.constraints.NotBlank;
 public class Habitacion {
 
     @Schema(description = "Id habitacion", example = "1", required = true)
+    @NotNull
     @Id
     @Column(name = "id_Habitacion")
-    private int id_Habitacion;
+    private Integer  id_Habitacion;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "id_Hotel", nullable = false)
 
 
     @Schema(description = "id_Hotel", example = "7", required = true)
-    @NotBlank
+    @NotNull
     @Column(name="id_Hotel")
-    private int id_Hotel;
+    private Integer  id_Hotel;
 
     @Schema(description = "capacidad de la habitacion", example = "200.0", required = true)
     //	@NotBlank: Documenta que el atributo es obligatorio
-    @NotBlank
+    @NotNull
     @Column(name="capacidad")
-    private int capacidad;
+    private Integer  capacidad;
 
     @Schema(description = "Precio noche", example = "150.0", required = true)
     //	@NotBlank: Documenta que el atributo es obligatorio
-    @NotBlank
+    @NotNull
     @Column(name="precioNoche")
-    private double precio_Noche;
+    private Double precio_Noche;
 
     @Schema(description = "Incluye desayuno", example = "True", required = true)
     //	@NotBlank: Documenta que el atributo es obligatorio
@@ -81,7 +83,7 @@ public class Habitacion {
         this.capacidad = capacidad;
     }
 
-    public double getPrecio_Noche() {
+    public Double getPrecio_Noche() {
         return precio_Noche;
     }
 

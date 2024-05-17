@@ -44,7 +44,7 @@ public class HotelDAO implements HotelDAOInterface{
     }
 
     @Override
-    public List<Hotel> findByCategoria(String categoria) {
+    public List<Hotel> findByCategoria(Integer categoria) {
 
         Session currentSession = entityManager.unwrap(Session.class);
 
@@ -64,7 +64,7 @@ public class HotelDAO implements HotelDAOInterface{
         Session currentSession = entityManager.unwrap(Session.class);
         Transaction t = currentSession.beginTransaction();
 
-        currentSession.saveOrUpdate(hotel);
+        currentSession.save(hotel);
         t.commit();
         currentSession.close();
     }
