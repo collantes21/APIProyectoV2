@@ -27,6 +27,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.security.MessageDigest;
@@ -252,18 +253,27 @@ public class HotelRestController {
             @ApiResponse(responseCode = "404", description = "Habitacion no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
     @DeleteMapping("/eliminar_habitacion/{id_Habitacion}")
-    public String eliminarHabitacion(@PathVariable int id_Habitacion) {
-        hotelService.eliminarHabitacion(id_Habitacion);
-
-        return "Se elimina la habitacion";
+    public ResponseEntity<String> eliminarHabitacion(@PathVariable int id_Habitacion) {
+        try {
+            hotelService.eliminarHabitacion(id_Habitacion);
+            return new ResponseEntity<>("Se elimina la habitacion", HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No se pudo eliminar la habitacion");
+        }
     }
+
+//    public String eliminarHabitacion(@PathVariable int id_Habitacion) {
+//        hotelService.eliminarHabitacion(id_Habitacion);
+//
+//        return "Se elimina la habitacion";
+//    }
 
     @Operation(summary = "Modifica la habitacion")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Habitacion modificada", content = @Content(schema = @Schema(implementation = Response.class))),
             @ApiResponse(responseCode = "404", description = "Habitacion no existe", content = @Content(schema = @Schema(implementation = Response.class)))
     })
-    @PutMapping("/modificar_ocupacion/{id_Habitacion}")
+    @PatchMapping("/modificar_ocupacion/{id_Habitacion}")
     public void modificarOcupacion(@PathVariable int id_Habitacion) {
         hotelService.modificarOcupacion(id_Habitacion);
     }

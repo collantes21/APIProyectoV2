@@ -43,10 +43,6 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
 
         Session currentSession = entityManager.unwrap(Session.class);
         Transaction t = currentSession.beginTransaction();
-        //forma facil
-        //User user=findById(id);
-        //currentSession.delete(user);
-        //otra forma utilizando sentencias HQL DE hibernate
 
         Query theQuery = currentSession.createQuery("delete from Habitacion h where id_Habitacion IN (:id_Habitacion)");
 
@@ -60,19 +56,26 @@ public class HabitacionesDAO implements HabitacionesDAOInterface{
     public void modificarOcupacion(int id_Habitacion) {
 
         Session currentSession = entityManager.unwrap(Session.class);
-
-        Habitacion habitacion = currentSession.get(Habitacion.class, id_Habitacion);
         Transaction t = currentSession.beginTransaction();
 
-        if (habitacion != null) {
-            habitacion.setOcupada(true);
-            currentSession.saveOrUpdate(habitacion);
-            t.commit();
-            currentSession.close();
+        // Primero obtenemos el estado actual de la habitación
+        Query<Habitacion> query = currentSession.createQuery("from Habitacion h where h.id_Habitacion = :id_Habitacion", Habitacion.class);
+        query.setParameter("id_Habitacion", id_Habitacion);
+        Habitacion habitacion = query.uniqueResult();
 
-        } else {
-            throw new EntityNotFoundException("Habitacion no encontrada: " + id_Habitacion);
+        if (habitacion != null) {
+            // Invertimos el valor de 'ocupada'
+            boolean nuevoEstado = !habitacion.getOcupada();
+
+            // Actualizamos el valor de 'ocupada'
+            Query updateQuery = currentSession.createQuery("update Habitacion h set h.ocupada = :nuevoEstado where h.id_Habitacion = :id_Habitacion");
+            updateQuery.setParameter("nuevoEstado", nuevoEstado);
+            updateQuery.setParameter("id_Habitacion", id_Habitacion);
+            updateQuery.executeUpdate();
         }
+
+        t.commit();
+        currentSession.close();
     }
 
     @Override
